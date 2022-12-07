@@ -230,6 +230,49 @@ def mysyntex_test_string():
     print("Hello world"[7:10])
     print("일이삼사오육칠팔구십"[7:10])
 
+from array import*
+def mysyntex_test_array():
+    subject = subject_printer(mysyntex_test_array)
+    num_array = array('i', [43, 523, 432, 5235,67])
+    print("num_array : ", num_array)
+    sorted(num_array)
+    num_array.pop()
+    num_array.append(343)
+    num_array.reverse()
+
+
+import csv
+def mysyntex_test_fileio():
+    # write/read text
+    file = open("test.txt", "w")
+    file.write("one-")
+    file.write("two-")
+    file.write("three-")
+    file.close()
+
+    file = open("test.txt", "r")
+    print(file.read())
+    file.close()
+
+    #cvs
+    file = open("test.csv", "w")
+    record = "one, two, three\n"
+    file.write(str(record))
+    record = "one, two\n"
+    file.write(str(record))
+    file.write(str(record))
+    file.close()
+
+    print("file = open(\"test.csv\", \"r\")")
+    file = open("test.csv", "r")
+    for row in file:
+        print(row)
+    file.close()
+
+    file = open("test.csv", "r")
+    reader = csv.reader(file)
+    rows = list(reader)
+    print("rows[1] :", rows[1])
 
 #mysyntex_test_print()
 #mysyntex_test_type()
@@ -238,5 +281,7 @@ def mysyntex_test_string():
 #mysyntex_test_class()
 #mysyntex_test_list()
 #mysyntex_test_tuple()
-mysyntex_test_dict()
+#mysyntex_test_dict()
 #mysyntex_test_string()
+#mysyntex_test_array()
+mysyntex_test_fileio()
