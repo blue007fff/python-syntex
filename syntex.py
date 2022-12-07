@@ -104,3 +104,25 @@ def mysyntex_test_branch():
             print('a is in ', a_list)
         else:
             break
+
+
+def mysyntex_test_class():
+    subject = subject_printer(mysyntex_test_class)
+    class myclass():
+        m_a = 0
+        
+        def __init__(self, m_b, m_c):
+            self.m_b = m_b
+            self.m_c = m_c
+
+        def print_type(self):
+            print(type(self))
+            print("m_a : ", type(self.m_a))
+            print("m_b : ", type(self.m_b))
+            print("m_c : ", type(self.m_c))
+
+    # class 멤버도 중간에 타입 변경이 가능하네...
+    myclass_var = myclass(314, "3.14")
+    myclass_var.print_type()
+    myclass_var = myclass(3.14, "3.14")
+    myclass_var.print_type()
