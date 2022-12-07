@@ -106,6 +106,37 @@ def mysyntex_test_branch():
             break
 
 
+def mysyntex_test_loop():
+    subject = subject_printer(mysyntex_test_loop)
+
+    # for loop
+    print("for i in range(1, 10) :", end=' ')
+    for i in range(1, 10):
+        print(i, end=' ')
+    print()
+
+    print("for i in range(1, 10, 3) :", end=' ')
+    for i in range(1, 10, 3):
+        print(i, end=' ')
+    print()
+
+    print("for i in \"Hello world\" :", end=' ')
+    for i in "Hello world":
+        print(i, end=' ')
+    print()
+
+    a_list = list(range(10))
+    for i in a_list:
+        print(i, end=' ')
+    print()
+
+    inputstring = ""
+    while inputstring != "exit":
+        inputstring = input("Input : ")
+        print(inputstring)
+    print("exit while")
+
+
 def mysyntex_test_class():
     subject = subject_printer(mysyntex_test_class)
     class myclass():
@@ -126,3 +157,29 @@ def mysyntex_test_class():
     myclass_var.print_type()
     myclass_var = myclass(3.14, "3.14")
     myclass_var.print_type()
+
+
+def mysyntex_test_list():
+    subject = subject_printer(mysyntex_test_list)
+
+    a_list = list(range(10))
+    print("a_list :", a_list)
+
+    a_list = list(range(2, 10, 3))
+    print("a_list :", a_list)   
+
+    a_list = list(range(10))
+    a_list = [2*x+1 for x in a_list]
+    print("a_list :", a_list)
+    
+    a_list = list(range(10))
+    a_list = [2*x for x in a_list if x < 5]
+    print("a_list :", a_list)
+
+
+#mysyntex_test_print()
+#mysyntex_test_type()
+#mysyntex_test_branch()
+#mysyntex_test_loop()
+#mysyntex_test_class()
+mysyntex_test_list()
