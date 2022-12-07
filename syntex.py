@@ -176,6 +176,33 @@ def mysyntex_test_list():
     a_list = [2*x for x in a_list if x < 5]
     print("a_list :", a_list)
 
+    # num_list = [423, 234, 3534, 6765, 123]
+    # print("num_list : ", num_list)
+    # print("num_list[1:4] : ", num_list[1:4])
+    # num_list.insert(2, 333)
+    # num_list.remove(123)
+    # num_list.append(999)
+    # print("num_list : ", num_list)
+
+    # mat = [[1, 0, 0], [0, 1, 0], [0, 0, 1]]
+    # print("mat :", mat)
+    # mat[2].append(1)
+    # print("mat :", mat)
+
+def mysyntex_test_tuple():
+    subject = subject_printer(mysyntex_test_tuple)
+
+    num_tuple = ("one", "two", "three", "four")
+    print("num_tuple : ", num_tuple)
+    print("two idx : ", num_tuple.index("two"))
+    print("num_tuple[3] : ", num_tuple[3])
+
+def mysyntex_test_dict():
+    subject = subject_printer(mysyntex_test_dict)
+
+    num_dic = {1:"one", 2:"two", 3:"three"}
+    print("num_dic[1] : ", num_dic[1])
+
 def mysyntex_test_string():
     subject = subject_printer(mysyntex_test_string)
 
@@ -210,4 +237,6 @@ def mysyntex_test_string():
 #mysyntex_test_loop()
 #mysyntex_test_class()
 #mysyntex_test_list()
-mysyntex_test_string()
+#mysyntex_test_tuple()
+mysyntex_test_dict()
+#mysyntex_test_string()
