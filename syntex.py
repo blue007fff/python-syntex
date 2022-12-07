@@ -78,3 +78,29 @@ def mysyntex_test_type():
     print(type(a), a)
     a = list(a)    
     print(type(a), a)
+
+def mysyntex_test_branch():
+    subject = subject_printer(mysyntex_test_branch)
+
+    while 1:
+        score = int(input("Enter score (0~100) : "))
+        if (0 <= score and score <= 100):  # and/or
+            if (score == 100):
+                print("S : ", score)
+            elif (score >= 90):
+                print("A : ", score)
+            elif (score >= 80):
+                print("B : ", score)
+            else:
+                print("F : ", score)
+        else:
+            break
+    print("end")
+
+    a_list = list(range(10))
+    while 1:
+        a = int(input("Enter  : "))
+        if a in a_list:
+            print('a is in ', a_list)
+        else:
+            break
