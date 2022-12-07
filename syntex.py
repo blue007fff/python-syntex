@@ -35,6 +35,8 @@ def mysyntex_test_print():
     print(f'{"padding":{"="}>{30}}')
     print(f'{"padding":{"="}^{30}}')
 
+    print(f'{"first":{"!"}<{10}} {"second"} {"third"}')
+
     print('{:<15}'.format('padding'))
     print('{:>15}'.format('padding'))
     print('%15s' % ('padding'))
