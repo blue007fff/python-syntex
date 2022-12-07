@@ -43,4 +43,38 @@ def mysyntex_test_print():
     print('%-15s' % ('padding'))
 
 
-mysyntex_test_print()
+def mysyntex_test_type():
+    subject = subject_printer(mysyntex_test_type)
+    print(type(None))
+    print(type(314))
+    print(type(3.14))
+    print(type("3.14"))
+    print(type(True))
+    print(type([1, 2, 3]))
+    print(type((1, 2, "3")))
+    tuple_a = 1, 3
+    print(type(tuple_a), tuple_a)
+    print(type({1:"first", 2:"second", 3:"third"}))
+
+    class myclass():
+        m_a = 0
+    print(type(myclass()))
+
+    # casting    
+    a = "3.14"
+    print(a)
+    a = float(a)
+    print("float(a)", a)
+    a = int(a * 100)
+    print("int(a)", a)
+    a = str(a)
+    print("str(a)", a)
+
+    a = list(range(5))
+    print(type(a), a)
+    a = tuple(a)
+    print(type(a), a)
+    a = set(a)
+    print(type(a), a)
+    a = list(a)    
+    print(type(a), a)
