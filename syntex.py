@@ -176,10 +176,38 @@ def mysyntex_test_list():
     a_list = [2*x for x in a_list if x < 5]
     print("a_list :", a_list)
 
+def mysyntex_test_string():
+    subject = subject_printer(mysyntex_test_string)
+
+    string = """줄바꿈 가능
+    줄바꿈 가능
+    줄바꿈 가능"""
+    print(string)
+    print("string len : ", len(string))
+
+    string = "test test"
+    print(string)
+    string = string.upper()
+    print("upper : ", string)
+    string = string.lower()
+    print("lower : ", string)
+    string = string.capitalize()
+    print("capitalize : ", string)
+    string = string.title()
+    print("title : ", string)
+    string = string.split(" ")
+    print("split : ", string)
+    string = " test test "
+    string = string.strip(" ")
+    print("strip : ", string)
+    print("Hello world"[7:10])
+    print("일이삼사오육칠팔구십"[7:10])
+
 
 #mysyntex_test_print()
 #mysyntex_test_type()
 #mysyntex_test_branch()
 #mysyntex_test_loop()
 #mysyntex_test_class()
-mysyntex_test_list()
+#mysyntex_test_list()
+mysyntex_test_string()
