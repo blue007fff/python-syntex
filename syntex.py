@@ -42,6 +42,9 @@ def mysyntex_test_print():
     print('%15s' % ('padding'))
     print('%-15s' % ('padding'))
 
+    # 숫자 입력 //readline이 더 빠르다고 배움
+    #a, b = map(int,list(sys.stdin.readline().split()))
+
 
 def mysyntex_test_type():
     subject = subject_printer(mysyntex_test_type)
@@ -243,6 +246,7 @@ def mysyntex_test_array():
 
 import csv
 def mysyntex_test_fileio():
+    subject = subject_printer(mysyntex_test_fileio)
     # write/read text
     file = open("test.txt", "w")
     file.write("one-")
@@ -270,9 +274,114 @@ def mysyntex_test_fileio():
     file.close()
 
     file = open("test.csv", "r")
-    reader = csv.reader(file)
+    reader = csv.reader(file)    
+    print(reader)
+
     rows = list(reader)
-    print("rows[1] :", rows[1])
+    for i in rows:
+        print(i)
+    
+    print(len(rows))
+    for i in range(0, len(rows)):
+       print("rows[{0}] :".format(i), rows[i])
+
+
+
+#import 모듈명
+#from import 모듈명 변수/함수/클래스
+#from import 모듈명 *
+#import 모듈명 as 별명
+#from import 모듈명 변수/함수/클래스 as 별명
+def mysyntex_test_module():
+    subject = subject_printer(mysyntex_test_module)
+
+from pathlib import Path
+def mysyntex_test_module_pathlib():
+    subject = subject_printer(mysyntex_test_module_pathlib)
+
+    print(Path.cwd())
+    print(Path.home())
+    
+    relpath = Path("test.txt") 
+    print(relpath)
+    relpath = relpath.resolve() #현재 디렉토리를 기준으로 절대경로로 변경.
+    print(relpath)
+
+    rel_dir = Path('.')
+    pal_rel_dir = Path('..') #Path('./..')
+
+    print(f'{"":{"-"}<{30}}')
+
+    filepath = Path("C:\\Users\\SeongJu\\Desktop\\python-syntex\\test.txt")  
+    print(filepath)
+    print(filepath.parent)
+    print(filepath.name)
+    print(filepath.stem)
+    print(filepath.suffix)    
+    print(f'{"":{"-"}<{30}}')
+
+    print(filepath.exists())
+    print(filepath.is_dir())
+    print(filepath.is_file())
+    print(filepath.home())
+
+    print(f'{"":{"-"}<{30}}')
+    dirpath = rel_dir = Path('.')
+    print(dirpath.mkdir('Test/A'), True)
+    print(dirpath.mkdir('Test/B'))
+    #print(filepath.touch())
+    #print(filepath.unlink())
+    #print(dirpath.rmdir())
+
+from datetime import date, time, datetime, timedelta
+def mysyntex_test_module_datetime():
+    subject = subject_printer(mysyntex_test_module_datetime)
+
+    date_obj= date(2020, 10, 3)    
+    time_obj = time(15, 23, 21)
+    datetime_obj = datetime(2022, 12, 11, 7, 30, 25)
+
+    print(date_obj)
+    print(time_obj)
+    print(datetime_obj)
+
+    date_obj2= date(2020, 8, 3)
+    diff_date = date_obj2 - date_obj
+    print(type(diff_date),  diff_date)
+
+    today = date.today()
+    now = datetime.now()
+    print(today, now, sep=' : ')
+
+import locale
+def mysyntex_test_module_locale():
+    subject = subject_printer(mysyntex_test_module_locale)
+
+    now = datetime.now()
+    locale.setlocale(locale.LC_ALL, 'ko_KR.UTF-8')
+    print(locale.getlocale())
+    print("{0:%A}, {0:%a}".format(now))
+    print("{0:%B}, {0:%b}".format(now))    
+    print(now.strftime("%Y-%m-%d:%A : %H:%M:%S(%p)"))
+    print(f'{"":{"-"}<{30}}')
+
+    locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
+    print(locale.getlocale())
+    print("{0:%A}, {0:%a}".format(now))
+    print("{0:%B}, {0:%b}".format(now))
+    print(now.strftime("%Y-%m-%d:%A : %H:%M:%S(%p)"))
+
+# # math test
+# import math
+# math.sqrt()
+# math.pi
+# round()
+
+# import random
+# num = random.random()
+# num = random.ranint(0, 1000)
+# num = random.ranrange(0, 1000, 5)
+# color = random.choice(["red", "black", "green"])
 
 #mysyntex_test_print()
 #mysyntex_test_type()
@@ -284,4 +393,9 @@ def mysyntex_test_fileio():
 #mysyntex_test_dict()
 #mysyntex_test_string()
 #mysyntex_test_array()
-mysyntex_test_fileio()
+#mysyntex_test_fileio()
+
+#mysyntex_test_module()
+#mysyntex_test_module_pathlib()    
+#mysyntex_test_module_datetime()
+mysyntex_test_module_locale()
