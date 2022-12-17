@@ -1,0 +1,10 @@
+{
+  "apple": "\uc0ac\uacfc",
+  "banana": "\ubc14\ub098\ub098",
+  "Group": {
+    "One": 1,
+    "Two": 2
+  },
+  "True": true,
+  "Null": null
+}

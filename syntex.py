@@ -286,6 +286,79 @@ def mysyntex_test_fileio():
        print("rows[{0}] :".format(i), rows[i])
 
 
+def mysyntex_test_fileio_encoding():
+    subject = subject_printer(mysyntex_test_fileio_encoding)
+
+    with open("test_cp949.txt", 'w', encoding='cp949') as f:
+        f.write("one, two, three\n")
+        f.write("하나, 둘, 셋")
+
+    with open("test_utf8.txt", 'w', encoding='utf-8') as f:
+        f.write("one, two, three\n")
+        f.write("하나, 둘, 셋")
+
+    lines = []
+    data = ''
+    with open("test_cp949.txt", 'r', encoding='cp949') as f:
+        #lines = f.readlines()
+        data = f.read()
+
+    # for line in lines:
+    #     print(line)
+    print(data)
+
+    # encode 형식이 다르면 예외 처리 됨.
+    #with open("test_cp949.txt", 'r', encoding='utf-8') as f:
+    with open("test_utf8.txt", 'r', encoding='utf-8') as f:
+        #data = f.read()
+        lines = f.readlines()
+
+    for line in lines:
+        print(line, end='')
+    print()
+    #print(data)
+
+
+def mysyntex_test_fileio_json():
+    subject = subject_printer(mysyntex_test_fileio_json)
+
+    import json
+
+    # 원소 끝부분에 ',' 들어가면 안됨
+    json_string = '''{
+        "apple": "사과",
+        "banana": "바나나",
+        "Group": {
+            "One": 1,
+            "Two": 2
+        },
+        "True": true,
+        "Null": null
+    }
+    '''
+    json_object = json.loads(json_string)
+
+    assert json_object['apple'] == "사과"
+    assert json_object['banana'] == '바나나'
+    assert json_object['Group']['One'] == 1
+    assert json_object['True'] is True
+    assert json_object['Null'] is None
+
+    json_string = json.dumps(json_object)
+    print(json_string)
+    json_string = json.dumps(json_object, indent=2)
+    print(json_string)
+
+    with open("test.json", "w") as f:
+        #f.write(json_string)
+        json.dump(json_object, f, indent=2)
+
+    with open("test.json", "r") as f:
+        json_string = f.read()
+    print(json_string)
+
+    json_object = json.loads(json_string)
+    print(json_object)
 
 #import 모듈명
 #from import 모듈명 변수/함수/클래스
@@ -394,8 +467,10 @@ def mysyntex_test_module_locale():
 #mysyntex_test_string()
 #mysyntex_test_array()
 #mysyntex_test_fileio()
+#mysyntex_test_fileio_encoding()
+mysyntex_test_fileio_json()
 
 #mysyntex_test_module()
 #mysyntex_test_module_pathlib()    
 #mysyntex_test_module_datetime()
-mysyntex_test_module_locale()
+#mysyntex_test_module_locale()
