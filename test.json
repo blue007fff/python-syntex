@@ -6,5 +6,10 @@
     "Two": 2
   },
   "True": true,
-  "Null": null
+  "Null": null,
+  "\ub9ac\uc2a4\ud2b8": [
+    "one",
+    "two",
+    "three"
+  ]
 }

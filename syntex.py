@@ -324,6 +324,16 @@ def mysyntex_test_fileio_json():
 
     import json
 
+    #JSON              파이썬
+    #오브젝트(object)   dict
+    #배열(array)        list
+    #문자열(string)     str
+    #숫자 (정수)        int
+    #숫자 (실수)        float
+    #true              True
+    #false             False
+    #null              None
+
     # 원소 끝부분에 ',' 들어가면 안됨
     json_string = '''{
         "apple": "사과",
@@ -333,16 +343,19 @@ def mysyntex_test_fileio_json():
             "Two": 2
         },
         "True": true,
-        "Null": null
+        "Null": null,
+        "리스트": ["one", "two", "three"]
     }
     '''
     json_object = json.loads(json_string)
+    print(f'json_object : {type(json_object)}')
 
     assert json_object['apple'] == "사과"
     assert json_object['banana'] == '바나나'
     assert json_object['Group']['One'] == 1
     assert json_object['True'] is True
     assert json_object['Null'] is None
+    assert isinstance(json_object['리스트'], list)
 
     json_string = json.dumps(json_object)
     print(json_string)
@@ -359,6 +372,15 @@ def mysyntex_test_fileio_json():
 
     json_object = json.loads(json_string)
     print(json_object)
+    print(f'json_object : {type(json_object)}')
+
+    with open("test.json", "r") as f:
+        json_object = json.load(f)
+    print(f'json_object : {type(json_object)}')
+    print(json_object)
+    
+
+
 
 #import 모듈명
 #from import 모듈명 변수/함수/클래스
