@@ -544,6 +544,49 @@ def mysyntex_test_numpy():
     print(arr)
     
 
+def mysyntex_test_pandas():
+    subject = subject_printer(mysyntex_test_pandas)
+
+    import numpy as np
+    import pandas as pd
+
+    s1 = pd.Series(list(range(0, 10, 2)))
+    print(type(s1))
+    print(s1)
+    print(s1.index)
+    print(s1.values)
+
+    index_data = ['2022-12-18', '2022-12-19', '2022-12-20']
+    data = [3500, 3600, np.nan]
+    s1 = pd.Series(data, index = index_data)
+    print(s1)
+
+    s1 = pd.Series({'One':1, 'Two':2, 'Three':3})
+    print(s1)
+
+    index_data = pd.date_range(start='2020-02-27', end='2020-03-01')
+    data = [3500, 3579, np.nan, 3782]
+    s1 = pd.Series(data, index = index_data)
+    print(s1)
+
+    dates = pd.date_range(start='2020-02-27', end='2020-03-30', freq='2D')
+    print(dates)
+
+    dates = pd.date_range(start='2020-02-27', periods=12)
+    print(dates)
+
+    dates = pd.date_range(start='2020-02-27', periods=12, freq='B') #업무일(월~금) 기준
+    print(dates)
+
+    dates = pd.date_range(start='2020-02-27 10:00', periods=5, freq='30min')
+    print(dates)
+
+    s1 = pd.Series({'B':4.0, 'A':5.0, 'C':3.0, 'D':1.0})
+    print(s1)
+    s1 =s1.reindex(['A', 'B', 'C', 'D', 'E'])
+    print(s1)
+
+
 # # math test
 # import math
 # math.sqrt()
@@ -576,4 +619,5 @@ def mysyntex_test_numpy():
 #mysyntex_test_module_datetime()
 #mysyntex_test_module_locale()
 
-mysyntex_test_numpy()
+#mysyntex_test_numpy()
+mysyntex_test_pandas()
