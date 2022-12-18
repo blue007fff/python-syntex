@@ -10,7 +10,13 @@ class subject_printer:
         print(f'{"":{"_"}<{50}}')
         print("")
 
-
+def mysyntex_test_sys():
+    subject = subject_printer(mysyntex_test_sys)
+    import os
+    import sys    
+    
+    print (os.path.dirname(sys.executable) + '\Scripts\\')
+    print(sys.version)
 
 def mysyntex_test_print():    
     subject = subject_printer(mysyntex_test_print)
@@ -466,6 +472,31 @@ def mysyntex_test_module_locale():
     print("{0:%B}, {0:%b}".format(now))
     print(now.strftime("%Y-%m-%d:%A : %H:%M:%S(%p)"))
 
+
+def mysyntex_test_numpy():
+    subject = subject_printer(mysyntex_test_numpy)
+
+    import numpy as np
+
+    arr = np.array([0, 1, 2, 3, 4, 5])
+    print(type(arr), arr)
+
+    arr2 = np.array([[1,0,0], [0,1,0], [0,0,1]])
+    print(arr2)
+
+    print(type(arr.shape), arr.shape)
+    print(type(arr2.shape), arr2.shape)
+
+    arr3 = np.array(["one", "two", "three"])
+    print(arr3)
+
+    arr = np.arange(0, 10, 1)
+    print("np.arange(0, 10, 1) : ", arr)
+
+    arr = np.linspace(1, 10, 8)
+    print("np.linspace(1, 10, 8) : ", arr)    
+    
+
 # # math test
 # import math
 # math.sqrt()
@@ -478,6 +509,7 @@ def mysyntex_test_module_locale():
 # num = random.ranrange(0, 1000, 5)
 # color = random.choice(["red", "black", "green"])
 
+#mysyntex_test_sys()
 #mysyntex_test_print()
 #mysyntex_test_type()
 #mysyntex_test_branch()
@@ -490,9 +522,11 @@ def mysyntex_test_module_locale():
 #mysyntex_test_array()
 #mysyntex_test_fileio()
 #mysyntex_test_fileio_encoding()
-mysyntex_test_fileio_json()
+#mysyntex_test_fileio_json()
 
 #mysyntex_test_module()
 #mysyntex_test_module_pathlib()    
 #mysyntex_test_module_datetime()
 #mysyntex_test_module_locale()
+
+mysyntex_test_numpy()
