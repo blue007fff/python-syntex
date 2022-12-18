@@ -481,6 +481,10 @@ def mysyntex_test_numpy():
     arr = np.array([0, 1, 2, 3, 4, 5])
     print(type(arr), arr)
 
+    arr = np.array([0, 1, 2, 3, 4, 5], dtype=np.uint)
+    arr = np.array([0, 1, 2, 3, 4, 5], dtype=np.float32)
+    arr = arr.astype(np.int)
+
     arr2 = np.array([[1,0,0], [0,1,0], [0,0,1]])
     print(arr2)
 
@@ -489,12 +493,55 @@ def mysyntex_test_numpy():
 
     arr3 = np.array(["one", "two", "three"])
     print(arr3)
+    print(arr3.dtype)
 
     arr = np.arange(0, 10, 1)
     print("np.arange(0, 10, 1) : ", arr)
 
     arr = np.linspace(1, 10, 8)
-    print("np.linspace(1, 10, 8) : ", arr)    
+    print("np.linspace(1, 10, 8) : ", arr)  
+
+    print(f'{"reshape":{"-"}<{30}}')
+    arr = np.arange(0, 8, 1)
+    print('np.arange(0, 8, 1)', arr.shape)
+    print(arr)
+    arr = arr.reshape(2, 4)
+    print('arr.reshape(2, 4)', arr.shape)
+    print(arr)
+    arr_8 = arr.reshape(8,)
+    arr_8x1 = arr.reshape(8, 1) # 2차원 배열임
+    print('arr_8', arr_8.shape)
+    print(arr_8)
+    print('arr_8x1', arr_8x1.shape)
+    print(arr_8x1)
+    #arr = arr.reshape(3, 3) # exception
+    
+    arr = np.arange(1, 11, 1)    
+    print('sum, mean', arr.sum(), arr.mean())
+    print('std, var', arr.std(), arr.var())
+    print('min, max', arr.min(), arr.max())
+    print('cumsum', arr.cumsum())
+    print('cumprod', arr.cumprod())
+
+
+    arr = np.arange(0, 10, 1)
+    arr2 = arr[1:4]
+    print(arr2)
+    arr2 = arr[1:4:2]
+    print(arr2)
+    arr2 = arr[8:2:-2]
+    print(arr2)
+    arr2 = arr[::-1]
+    print(arr2)
+    arr2 = arr[[3, 6, 9, -1]]
+    print(arr2)
+    arr2 = arr[((arr%2)==0) & (arr > 5)]
+    print(arr2)
+    arr2 = arr[((arr%2)==0) | (arr > 5)]
+    print(arr2)
+
+    arr[5:] = 10
+    print(arr)
     
 
 # # math test
