@@ -586,6 +586,73 @@ def mysyntex_test_pandas():
     s1 =s1.reindex(['A', 'B', 'C', 'D', 'E'])
     print(s1)
 
+def mysyntex_test_pandas_dataframe():
+    subject = subject_printer(mysyntex_test_pandas_dataframe)
+
+    import numpy as np
+    import pandas as pd
+
+    data = [[1,2,3], [4,5,6], [7,8,9]]
+    df = pd.DataFrame(data)
+    print(type(df))
+    print(df)
+
+    data = np.arange(1, 13, 1).reshape(4, 3)
+    index_data = pd.date_range('2020-01-11', periods=4)
+    columns_data = ["A", "B", "C"]
+    df = pd.DataFrame(data, index=index_data, columns=columns_data)
+    print(df)
+
+    dict_data = {
+        '연도' : [2017, 2017, 2018, 2018, 2019, 2019], 
+        '지사' : ['한국', '미국', '한국', '미국', '한국', '미국'], 
+        '고객수' : [200, np.nan, 250, 450, 300, 500], 
+    }
+    df = pd.DataFrame(dict_data)
+    print(df)
+    print(df.index)
+    print(df.columns)
+    print(df.values)
+
+    df1 = df.set_index('연도')
+    print(df1)
+
+    df1 = df.reindex([4, 2, 5, 3, 1])
+    print(df1)
+    df1 = df.reindex(columns=['지사', '연도'])
+    print(df1)
+
+def mysyntex_test_pandas_dataframe_cvs():
+    subject = subject_printer(mysyntex_test_pandas_dataframe_cvs)
+
+    import numpy as np
+    import pandas as pd
+
+    dict_data = {
+        '제품ID' : ['P1001', 'P1002', 'P1003', 'P1004'],
+        '판매가격' : [5000, 7000, 8000, 10000],
+        '판매량' : [40, 93, 70, 48]}
+    df = pd.DataFrame(dict_data)
+    print(df)
+
+    #save
+    #df.to_csv("product_sales.csv", encoding='cp949')
+    df.to_csv("product_sales.csv", encoding='utf-8', index=False)
+
+    #read
+    df = pd.read_csv("product_sales.csv", sep=',', encoding='utf-8')
+    print(df)
+
+    df = pd.read_csv("product_sales.csv", sep=',', encoding='utf-8', header=None)
+    print(df)
+
+    columns_data = ['제품New', '판매가격New', '판매량New']
+    df = pd.read_csv("product_sales.csv", sep=',', encoding='utf-8', names=columns_data)
+    print(df)
+
+    df = pd.read_csv("product_sales.csv", sep=',', encoding='utf-8', header=0, names=columns_data)
+    print(df)
+
 
 # # math test
 # import math
@@ -620,4 +687,6 @@ def mysyntex_test_pandas():
 #mysyntex_test_module_locale()
 
 #mysyntex_test_numpy()
-mysyntex_test_pandas()
+#mysyntex_test_pandas()
+#mysyntex_test_pandas_dataframe()
+mysyntex_test_pandas_dataframe_cvs()
