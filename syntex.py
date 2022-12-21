@@ -654,6 +654,51 @@ def mysyntex_test_pandas_dataframe_cvs():
     print(df)
 
 
+def mysyntex_test_pandas_dataframe_excel():
+    subject = subject_printer(mysyntex_test_pandas_dataframe_excel)
+
+    import numpy as np
+    import pandas as pd
+
+    dict_data = {
+        '제품ID' : ['P1001', 'P1002', 'P1003', 'P1004'],
+        '판매가격' : [5000, 7000, 8000, 10000],
+        '판매량' : [40, 93, 70, 48]}
+    df = pd.DataFrame(dict_data)
+    print(df)
+
+    #save
+    df.to_excel("product_sales.xlsx")
+
+    # excel_writer = pd.ExcelWriter("product_sales2.xlsx", engine='openpyxl')
+    # df.to_excel(excel_writer, index=True, header=True, sheet_name='Sheet1', startrow=0, startcol=0)
+    # df.to_excel(excel_writer, index=True, header=True, sheet_name='Sheet2', startrow=1, startcol=1)
+    # excel_writer.save() # not public api    
+
+    with pd.ExcelWriter("product_sales.xlsx", engine='openpyxl') as excel_writer:
+        df.to_excel(excel_writer, index=True, header=True, sheet_name='Sheet1', startrow=0, startcol=0)
+        df.to_excel(excel_writer, index=True, header=True, sheet_name='Sheet2', startrow=1, startcol=1)
+        df.to_excel(excel_writer, index=False, header=False, sheet_name='Sheet2', startrow=2, startcol=6)
+
+    #read
+    df = pd.read_excel("product_sales.xlsx")
+    print(f'{"":{"-"}<{50}}')
+    print(df)    
+
+    df = pd.read_excel("product_sales.xlsx", index_col=0, header=0)
+    print(f'{"":{"-"}<{50}}')
+    print(df)
+
+    name_list = ['제품New', '판매가격New', '판매량New']
+    df = pd.read_excel("product_sales.xlsx", index_col=0, header=0, names=name_list)
+    print(f'{"":{"-"}<{50}}')
+    print(df)
+
+    df = pd.read_excel("product_sales.xlsx", sheet_name='Sheet2')
+    print(f'{"":{"-"}<{50}}')
+    print(df)
+
+
 # # math test
 # import math
 # math.sqrt()
@@ -689,4 +734,5 @@ def mysyntex_test_pandas_dataframe_cvs():
 #mysyntex_test_numpy()
 #mysyntex_test_pandas()
 #mysyntex_test_pandas_dataframe()
-mysyntex_test_pandas_dataframe_cvs()
+#mysyntex_test_pandas_dataframe_cvs()
+mysyntex_test_pandas_dataframe_excel()
