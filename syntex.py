@@ -544,11 +544,10 @@ def mysyntex_test_numpy():
     print(arr)
     
 
+import numpy as np
+import pandas as pd
 def mysyntex_test_pandas():
     subject = subject_printer(mysyntex_test_pandas)
-
-    import numpy as np
-    import pandas as pd
 
     s1 = pd.Series(list(range(0, 10, 2)))
     print(type(s1))
@@ -589,9 +588,6 @@ def mysyntex_test_pandas():
 def mysyntex_test_pandas_dataframe():
     subject = subject_printer(mysyntex_test_pandas_dataframe)
 
-    import numpy as np
-    import pandas as pd
-
     data = [[1,2,3], [4,5,6], [7,8,9]]
     df = pd.DataFrame(data)
     print(type(df))
@@ -621,6 +617,217 @@ def mysyntex_test_pandas_dataframe():
     print(df1)
     df1 = df.reindex(columns=['지사', '연도'])
     print(df1)
+
+def mysyntex_test_pandas_op_series():
+    subject = subject_printer(mysyntex_test_pandas_op_series)
+
+    # 동일.
+    #s1 = pd.Series(range(0, 10, 2))
+    #s1 = pd.Series(list(range(0, 10, 2))) 
+    data = list(range(1, 6, 1))
+    s1 = pd.Series(data)    
+    s2 = pd.Series([x*2 for x in data if x <=3])
+    print(s1)    
+    print(s2)
+    
+    print(s1 + s2 + 5)
+    print(s1 ** s2) # int64 -> float
+    print(s1 > 3)
+
+    #dict_data = {'a':1.0, 'b':2.0, 'c':3.0, 'd':4.0, 'e':5.0}
+    #s1 = pd.Series(dict_data)
+    #print(s1)
+    index_data = ['a', 'b', 'c', 'd', 'e']
+    data = [0.0, 1.0, 2.0, 3.0, 4.0]    
+    s1 = pd.Series(data, index=index_data)
+    print(s1)
+
+    # selection  ----------------------------------
+    #print(s1['a'])
+    #print(s1[['a', 'c']])
+    #print(s1['a':'c'])
+    #print(s1[0])
+
+    #print(s1[1])
+    #print(s1[[1, 3]])
+    #print(s1[1:3])    p
+    #print(s1[(s1>1) & (s1%2==0)])
+
+    #s1loc = s1.loc['a'] # dtype: float64    
+    #s1loc = s1.loc[['a', 'c', 'e']] # series    
+    #print(s1.loc['b':'d'])
+    
+    #print(s1.iloc[1])
+    #print(s1.iloc[[0, 2, 4]])
+    #print(s1.iloc[1:4])
+
+    # assign ----------------------------------
+    # s2 = s1[:]
+    # s2.iloc[1:4] = 10
+    # print(s1)
+    # s2 = s1[:]
+    # s2.loc['a':'c'] = 5
+    # print(s1)
+
+    # remove ----------------------------------
+    s1 = s1.drop(index='a')
+    print(s1)
+    s1 = s1.drop(index=['b','c'])
+    print(s1)
+
+    # merge ----------------------------------
+    s1 = pd.Series([1,2,3])
+    s2 = pd.Series([10,20])
+    s3 = pd.Series([100,200])
+    print(pd.concat([s1, s2, s3]))
+    print(pd.concat([s1, s2, s3], ignore_index=True))
+    
+    # append is defrecated.
+    # s3 = s1[:]
+    # print(s3)
+    # s3.append(s2, ignore_index=True)
+    # print(s3)
+
+def mysyntex_test_pandas_op_dataframe():
+    subject = subject_printer(mysyntex_test_pandas_op_dataframe)   
+
+    l1 = list(range(1, 6, 1))   
+    dict_data1 = {
+        'A' : [x for x in l1],
+        'B' : [x*10 for x in l1],
+        'C' : [x*100 for x in l1]} 
+    l1 = list(range(1, 5, 1))
+    dict_data2 = {
+        'A' : [x for x in l1],
+        'B' : [x*10 for x in l1],
+        'D' : [x*100 for x in l1]} 
+    df1 = pd.DataFrame(dict_data1)
+    df2 = pd.DataFrame(dict_data2)
+    print(df1)
+    print(df2)
+
+    print(df1 + df2)
+    print(df1 * df2)
+    print(df1 > 30)
+
+    print(df1.mean())
+    print(df1.std())
+    print(df1.mean(axis=1))
+    print(df1.std(axis=1))
+    print(df1.describe())
+
+    index_data = ['a', 'b', 'c', 'd', 'e']
+    df1 = pd.DataFrame(dict_data1, index=index_data)
+    #print(df1)
+    print(df1.loc['a'])
+    print(df1.loc[['a', 'c', 'e']])
+    print(df1.loc['a':'c'])
+    
+    print(df1.iloc[2])
+    print(df1.iloc[[1, 3, 4]])
+    print(df1.iloc[2:5])
+    # df1.loc['a':'c'] = 5    
+    # print(df1)
+    # df1.iloc[1:3] = 4
+    # print(df1)
+    print(df1[df1['A'] > 3])
+    # print(df1[df1['A'] > 3])
+    print(df1[df1['A'].isin([3, 4])])
+    print(df1.head(2))
+    print(df1.tail(2))
+
+    print(df1['A'])
+    print(df1[['A']])
+    print(df1[['A','C']])
+    df1['A'] = 10
+    print(df1)
+    print(df1.loc['a', 'A'])
+    print(df1.iloc[0,0])
+    print(df1.loc['a':'c', ['A','B']])
+    print(df1.iloc[0:3,0:2])
+    print(df1.loc[df1['A']>2, ['A','B']])
+    print(df1['A']['a'])
+    print(df1['A'][2])
+    print(df1['A'][[0,2,3]])
+    print(df1['A']['a':'c'])
+    print(df1['A'][df1['B']>=3])
+    print(df1.T)
+
+    df1 = df1.T
+    df1 = df1.drop(index='A')
+    print(df1)
+    df1 = df1.drop(columns=['a', 'c'])
+    print(df1)
+
+    df1 = pd.DataFrame({'물리':[95,92,98,100],'수학':[85,82,88,80]})
+    df2 = pd.DataFrame({'물리':[85,62],'수학':[75,72]})
+    df3 = pd.DataFrame({'화학':[55,32]})
+    df4 = pd.DataFrame({'물리':[55,32]})
+    df5 = pd.DataFrame({'물리':[85,62], '화학':[75,72]})
+
+    print(pd.concat([df1, df2, df3], ignore_index=True))
+    print(pd.concat([df1, df2, df4], ignore_index=True, join='inner'))
+    print(pd.concat([df1, df2, df3], axis=1))
+    print(pd.concat([df1, df2, df3], axis=1, join='inner'))    
+
+
+    # join  : 가로방향(인덱스기준) 병합
+    # merge : 가로방향(열기준) 병합
+
+    df1 = pd.DataFrame({'A':['a0', 'a1', 'a2', 'a3'], 'B':['b0', 'b1', 'b2', 'b3']})
+    df2 = pd.DataFrame({'C':['c0', 'c1', 'c2'], 'D':['d0', 'd1', 'd2']}, index=[2,3,4])
+    df3 = pd.DataFrame({'A':['a31', 'a32', 'a33'], 'D':['d0', 'd1', 'd2']}, index=[2,3,4])
+    print(df1.join(df2, how='left'))    
+    print(df1.join(df2, how='right'))
+    print(df1.join(df2, how='outer'))
+    print(df1.join(df2, how='inner'))
+
+    print(df1.join(df3, how='outer', lsuffix='_1', rsuffix='_2'))
+   
+
+    # merge sample : 기준을 제외하고 겹치는 열이 없는 경우.
+    code_list = ['LS05', 'SM10', 'BP70', 'LS10', 'BP70', 'SM10', 'LS05']
+    sales_list = [29, 26, 30, 22, 19, 38, 45]
+    store_list = ['강남', '강남', '강남', '대학로', '대학로', '인천공항', '인천공항']
+    df1 = pd.DataFrame({'code':code_list, 'sale':sales_list,'stroe':store_list})    
+    df2 = pd.DataFrame({
+        'code':['LS05', 'SM10', 'BB70', 'BB20'],
+        'name':['브리오슈','베이글','치아바타','바게트']})
+
+    print(df1.merge(df2, how='left', on='code'))
+    print(df1.merge(df2, how='right', on='code'))
+
+    # merge sample : 기준을 제외하고 겹치는 열이 존재하는 경우.
+    df1 = pd.DataFrame({
+        'key':['k0', 'k1', 'k2', 'k3'],
+        'A':['a0', 'a1', 'a2', 'a3']})
+
+    df2 = pd.DataFrame({
+        'key':['k2', 'k3', 'k4', 'k5'],
+        'B':['b2', 'b3', 'b4', 'b5']})    
+    
+    print(df1.merge(df2, how='left', on='key'))    
+    print(df1.merge(df2, how='right', on='key'))    
+    print(df1.merge(df2, how='outer', on='key'))    
+    print(df1.merge(df2, how='inner', on='key'))
+    
+
+    df1 = pd.DataFrame({
+        'key':['k0', 'k1', 'k2', 'k3'],
+        'A':['a0', 'a1', 'a2', 'a3'],
+        'C':['c0', 'c1', 'c2', 'c3']})
+
+    df2 = pd.DataFrame({
+        'key':['k0', 'k1', 'k2', 'k3'],
+        'A':['a0', 'a1', 'a4', 'a5'],
+        'D':['d0', 'd1', 'd4', 'd5']})
+
+    print(df1.merge(df2, how='inner'))
+    print(df1.merge(df2, how='inner', on=['key', 'A']))
+    print(df1.merge(df2, how='inner', on='key'))
+    print(df1.merge(df2, how='inner', on='A'))
+    print(df1.merge(df2, how='inner', on='A', suffixes=('_left', '_right')))
+
 
 def mysyntex_test_pandas_dataframe_cvs():
     subject = subject_printer(mysyntex_test_pandas_dataframe_cvs)
@@ -675,7 +882,8 @@ def mysyntex_test_pandas_dataframe_excel():
     # df.to_excel(excel_writer, index=True, header=True, sheet_name='Sheet2', startrow=1, startcol=1)
     # excel_writer.save() # not public api    
 
-    with pd.ExcelWriter("product_sales.xlsx", engine='openpyxl') as excel_writer:
+    with pd.ExcelWriter("product_sales.xlsx", engine='xlsxwriter') as excel_writer:
+    #with pd.ExcelWriter("product_sales.xlsx", engine='openpyxl') as excel_writer:
         df.to_excel(excel_writer, index=True, header=True, sheet_name='Sheet1', startrow=0, startcol=0)
         df.to_excel(excel_writer, index=True, header=True, sheet_name='Sheet2', startrow=1, startcol=1)
         df.to_excel(excel_writer, index=False, header=False, sheet_name='Sheet2', startrow=2, startcol=6)
@@ -734,5 +942,7 @@ def mysyntex_test_pandas_dataframe_excel():
 #mysyntex_test_numpy()
 #mysyntex_test_pandas()
 #mysyntex_test_pandas_dataframe()
+#mysyntex_test_pandas_op_series()
+mysyntex_test_pandas_op_dataframe()
 #mysyntex_test_pandas_dataframe_cvs()
-mysyntex_test_pandas_dataframe_excel()
+#mysyntex_test_pandas_dataframe_excel()
