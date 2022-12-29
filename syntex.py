@@ -907,6 +907,47 @@ def mysyntex_test_pandas_dataframe_excel():
     print(df)
 
 
+import xlsxwriter
+def mysyntex_test_xlsxwriter():
+    subject = subject_printer(mysyntex_test_xlsxwriter)
+    
+    workbook = xlsxwriter.Workbook("test_xlsxwriter.xlsx")
+    worksheet = workbook.add_worksheet("sheet1")
+    worksheet.write(0, 0, 10)
+    #worksheet.write('A0', 11)
+    worksheet.write(1, 0, 100)
+    worksheet.write(2, 0, 3.14)
+    worksheet.write(3, 0, 'hi')
+    worksheet.write(4, 0, '=COS(PI()/4)')
+    worksheet.write(5, 0, None)
+
+    worksheet.write(1, 1, 100)
+    worksheet.write(2, 1, 200)
+    worksheet.write(3, 1, 300)
+    worksheet.write(4, 1, 400)
+    worksheet.write(5, 1, '=SUM(B2:B5)')
+
+
+    worksheet = workbook.add_worksheet("sheet2_new")
+    list_num = list(range(1, 10, 1))
+    for col, val in enumerate(list_num):
+        worksheet.write(0, col, val)
+        
+    worksheet.write_row(1, 0, list_num)
+    worksheet.write_column(2, 0, list_num)
+
+    dict_data = {
+        '제품ID':['P001', 'P002', 'P003'],
+        '가격':[9999, 19999, 29999],
+        '판매량':[50, 30, 40]}
+    list_keys = list(dict_data.keys())
+    list_values = list(dict_data.values())
+    worksheet.write_row(20, 0, list_keys)
+    for col, list_value in enumerate(list_values):
+        worksheet.write_column(21, col, list_value)
+
+    workbook.close()
+
 # # math test
 # import math
 # math.sqrt()
@@ -943,6 +984,8 @@ def mysyntex_test_pandas_dataframe_excel():
 #mysyntex_test_pandas()
 #mysyntex_test_pandas_dataframe()
 #mysyntex_test_pandas_op_series()
-mysyntex_test_pandas_op_dataframe()
+#mysyntex_test_pandas_op_dataframe()
 #mysyntex_test_pandas_dataframe_cvs()
 #mysyntex_test_pandas_dataframe_excel()
+
+mysyntex_test_xlsxwriter()
