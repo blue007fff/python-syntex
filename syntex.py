@@ -948,6 +948,173 @@ def mysyntex_test_xlsxwriter():
 
     workbook.close()
 
+def mysyntex_test_xlsxwriter_cellformat():
+    subject = subject_printer(mysyntex_test_xlsxwriter_cellformat)
+    
+    workbook = xlsxwriter.Workbook("test_xlsxwriter_cellformat.xlsx")
+    worksheet = workbook.add_worksheet("sheet1")
+
+    #-----------------------------------------------------
+    # 셀 서식 지정.
+    cell_format = workbook.add_format({
+        'font_name':'바탕',
+        'bold':True,
+        'font_color':'blue'})
+    # 함수로 셀 서식 지정
+    cell_format.set_italic()
+    cell_format.set_font_size(20)
+
+    worksheet.write('A1', '셀 서식 미지정')
+    worksheet.write('A2', '셀 서식 지정', cell_format)
+
+    
+    #-----------------------------------------------------
+    # 배경
+    cell_fmt1 = workbook.add_format()
+    cell_fmt2 = workbook.add_format()
+    cell_fmt3 = workbook.add_format()
+
+    cell_fmt1.set_bg_color('lime')
+    cell_fmt2.set_bg_color('blue')
+    cell_fmt2.set_font_color('white')
+    cell_fmt3.set_bg_color('red')
+    cell_fmt3.set_pattern(6) #배경 무늬 (0~18)
+    cell_fmt3.set_font_color('#FFFFFF') #RGB
+
+    worksheet.write('C1', "안녕")
+    worksheet.write('C2', "안녕", cell_fmt1)
+    worksheet.write('C3', "안녕", cell_fmt2)
+    worksheet.write('C4', "안녕", cell_fmt3)
+
+
+    #-----------------------------------------------------
+    # 테두리
+    cell_fmt1 = workbook.add_format()
+    cell_fmt2 = workbook.add_format()
+    cell_fmt3 = workbook.add_format()
+
+    cell_fmt1.set_border(1)
+    cell_fmt2.set_border(2)
+    cell_fmt2.set_border_color('blue')
+    cell_fmt3.set_bottom(8)
+    cell_fmt3.set_left(6)    
+
+    worksheet.write('D1', "안녕")
+    worksheet.write('D2', "안녕", cell_fmt1)
+    worksheet.write('D3', "안녕", cell_fmt2)
+    worksheet.write('D4', "안녕", cell_fmt3)
+
+    #-----------------------------------------------------
+    # 숫자 형식
+    cell_fmts = [workbook.add_format() for k in range(5)]
+    for k in range(5):
+        cell_fmts[k].set_num_format(k+1)
+    
+    num_data1 = 1234.567
+    num_data2 = -1234.567
+
+    worksheet.write('E1', num_data1)
+    worksheet.write('F1', num_data2)
+
+    for k in range(5):
+        row = k+2
+        idx = k+1
+        worksheet.write(row, 3, idx)
+        worksheet.write(row, 4, num_data1, cell_fmts[k])
+        worksheet.write(row, 5, num_data2, cell_fmts[k])
+
+
+    #-----------------------------------------------------
+    # date 형식
+    worksheet = workbook.add_worksheet("sheet2")
+    
+    datetime_formats = [
+        'm/d/yy',
+        'd-mmm-yyy',
+        'd-mmm',
+        'mmm-yy',
+        'h:mm AM/PM',
+        'h:mm:ss AM/PM',
+        'h:mm',
+        'h:mm:ss',
+        'm/d/yy h:mm',
+        'yyyy"년" mm"월" dd"일"',
+        'yyyy"년" mm"월" dd"일" hh:mm:ss',
+        'yy"년" m"월" d"일"',
+        'yy"년" m"월" d"일" hh:mm:ss']
+    
+    cell_formats = [workbook.add_format() for k in range(13)]
+
+    for k in range(13):
+        if(k < 9):
+            cell_formats[k].set_num_format(k+14)
+        else:
+            cell_formats[k].set_num_format(datetime_formats[k])
+    
+    datetime_data = datetime(2021, 4, 8, 17, 38, 59)
+
+    cell_format = workbook.add_format({'bold':True})
+    worksheet.write(0,0, '인덱스', cell_format)
+    worksheet.write(0,1, '서식 지정 문자열', cell_format)
+    worksheet.write(0,2, '서식 지정 출력 결과', cell_format)
+
+    # write cell
+    for k in range(13):
+        index = k+14
+        row = k+1
+        if(k<9):
+            worksheet.write(row, 0, index)
+        else:
+            worksheet.write(row, 0, "한글 날짜 서식 지정")
+        
+        worksheet.write(row, 1, datetime_formats[k])
+        worksheet.write(row, 2, datetime_data, cell_formats[k])
+
+
+    #-----------------------------------------------------
+    # align / w/h
+    worksheet = workbook.add_worksheet("sheet3")
+    cell_fmt1 = workbook.add_format({'align':'left'})
+    cell_fmt2 = workbook.add_format({'align':'center'})
+    cell_fmt3 = workbook.add_format({'align':'right'})
+    cell_fmt4 = workbook.add_format({'valign':'top'})
+    cell_fmt5 = workbook.add_format({'valign':'vcenter'})
+    cell_fmt6 = workbook.add_format({'valign':'bottom'})
+
+    worksheet.set_row(0, 20)
+    worksheet.set_row(1, 40)
+    worksheet.set_row(2, 60)
+    worksheet.set_column(0, 0, 15)
+    worksheet.set_column(1, 2, 30)
+
+    for k in range(3):
+        worksheet.write(0, k, "정렬, 크기", cell_fmt1)
+        worksheet.write(1, k, "정렬, 크기", cell_fmt2)
+        worksheet.write(2, k, "정렬, 크기", cell_fmt3)
+        worksheet.write(3, k, "정렬, 크기", cell_fmt4)
+        worksheet.write(4, k, "정렬, 크기", cell_fmt5)
+        worksheet.write(5, k, "정렬, 크기", cell_fmt6)
+
+
+    #-----------------------------------------------------
+    # insert image
+    worksheet = workbook.add_worksheet("insert-image")
+    image_file = "동구리.gif"
+    worksheet.insert_image(8, 1, image_file, {
+        'x_offset':25, 'y_offset':10,'x_scale':5, 'y_scale':5})
+
+    optinos = {
+        'x_offset':25, 'width':240, 'height':150,
+        'align':{'vertical':'middle', 'horizontal':'center'},
+        'font':{'bold':True, 'size':15},
+        'boder':{'color':'black', 'width':2},
+        'fill':{'color':'yellow'}
+    }
+    worksheet.insert_textbox(8, 20, '텍스트박스', optinos)
+
+    workbook.close()
+
+    
 # # math test
 # import math
 # math.sqrt()
@@ -988,4 +1155,5 @@ def mysyntex_test_xlsxwriter():
 #mysyntex_test_pandas_dataframe_cvs()
 #mysyntex_test_pandas_dataframe_excel()
 
-mysyntex_test_xlsxwriter()
+#mysyntex_test_xlsxwriter()
+mysyntex_test_xlsxwriter_cellformat()
