@@ -1114,7 +1114,75 @@ def mysyntex_test_xlsxwriter_cellformat():
 
     workbook.close()
 
+import xlwings as xw
+import numpy as np
+def mysyntex_test_xlwings():
+    subject = subject_printer(mysyntex_test_xlwings)
+
+    wb = xw.Book()
+    sht = wb.sheets['Sheet1'] # 이미 존재하는 Sheet 를 가져옴.
+
+    sht.range((1,1)).value = 100
+    sht.range((2,1)).value = 3.14
+    sht.range((3,1)).value = 'hi'
+
+    sht.range('B1').value = 100
+    sht.range('B2').value = 3.14
+    sht.range('B3').value = 'hi'
+    sht.range('B4').value = '=sum(B1:B2)'
+
+    print(sht.range('A1').value)
+    print(sht.range('A2').value)
+    print(sht.range('A3').value)
+
+
+    sht = wb.sheets['Sheet2']
+    list_data = [[10, 20, 30], [40, 50, 60], [70, 80, 90]]
+    sht.range((1,1)).value = '리스트'
+    sht.range((2,1)).value = list_data
     
+    npdata = np.array([10, 20, 30, 40, 50])
+    sht.range('A6').value = '넘파이 배열'
+    sht.range((7,1)).value = npdata
+
+    pddata = pd.Series([10, 20, 30, 40, 50])
+    sht.range('A9').value = '판다스 Series'
+    sht.range((10,1)).value = pddata
+
+    pddata = pd.DataFrame(list_data, columns=['A', 'B', 'C'])
+    sht.range('A16').value = '판다스 dataframe'
+    sht.range((17,1)).value = pddata
+
+
+    wb.save("xlwings_test.xlsx")
+    wb.close()
+
+
+    wb = xw.Book("xlwings_test.xlsx")
+    sht = wb.sheets['Sheet2'] # 이미 존재하는 Sheet 를 가져옴.
+    list_data = sht.range('A2').options(expand='table').value
+    print(list_data)
+
+    array_data = sht.range('A7').options(np.array, expand='table').value
+    print(array_data)
+
+    series_data = sht.range('A10').options(pd.Series, expand='table', header=False).value
+    print(series_data)
+    series_data = sht.range('B10').options(pd.Series, expand='table', header=False, index=False).value
+    print(series_data)
+
+    df_data = sht.range('A17').options(pd.DataFrame, expand='table').value
+    print(df_data)
+    df_data = sht.range('B17').options(pd.DataFrame, expand='table', index=False).value
+    print(df_data)
+
+
+    #상대경로가 여기가 아님
+    #sht.api.PrintOut()
+    #sht.api.ExportAsFixedFormat(0, "xlwings_test.pdf")
+    wb.api.ExportAsFixedFormat(0, "xlwings_test.pdf")
+
+
 # # math test
 # import math
 # math.sqrt()
@@ -1156,4 +1224,5 @@ def mysyntex_test_xlsxwriter_cellformat():
 #mysyntex_test_pandas_dataframe_excel()
 
 #mysyntex_test_xlsxwriter()
-mysyntex_test_xlsxwriter_cellformat()
+#mysyntex_test_xlsxwriter_cellformat()
+mysyntex_test_xlwings()
