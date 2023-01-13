@@ -1183,6 +1183,28 @@ def mysyntex_test_xlwings():
     wb.api.ExportAsFixedFormat(0, "xlwings_test.pdf")
 
 
+def mysyntex_test_read_html():
+    subject = subject_printer(mysyntex_test_read_html)
+
+    url = 'https://search.naver.com/search.naver?stop_hty&fbm=1&ie=utf8&query=%ED%99%98%EC%9C%A8'
+    #url = 'https://finance.naver.com/item/coinfo.naver?code=005930'
+    dfs = pd.read_html(url)
+    print(len(dfs))
+    print(dfs)
+    
+    exchange_rate_df = dfs[0].replace({'전일대비상승':'▲', '전일대비하락':'▼'}, regex=True)
+    print(exchange_rate_df)
+
+    excel_filepath = "html_to_excel.xlsx"
+    exchange_rate_df.to_excel(excel_filepath, index=False)
+
+    url = 'https://finance.naver.com/marketindex/exchangeList.nhn'
+    dfs = pd.read_html(url, header=1)    
+    #print(dfs)
+    dfs9 = dfs[0].head(9)
+    print(dfs9)
+    dfs9.to_excel("html_to_excel9.xlsx", index=False)
+
 # # math test
 # import math
 # math.sqrt()
@@ -1225,4 +1247,5 @@ def mysyntex_test_xlwings():
 
 #mysyntex_test_xlsxwriter()
 #mysyntex_test_xlsxwriter_cellformat()
-mysyntex_test_xlwings()
+#mysyntex_test_xlwings()
+mysyntex_test_read_html()
