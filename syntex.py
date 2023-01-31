@@ -1205,6 +1205,201 @@ def mysyntex_test_read_html():
     print(dfs9)
     dfs9.to_excel("html_to_excel9.xlsx", index=False)
 
+
+def mysyntex_test_excel_chart():
+    subject = subject_printer(mysyntex_test_excel_chart)
+
+    excel_file = 'chart.xlsx'
+    excel_chart_file = 'chart_out.xlsx'
+    df = pd.read_excel(excel_file)
+    print(df)    
+
+    worksheet_name = 'Sheet1'
+
+    excel_writer = pd.ExcelWriter(excel_chart_file, engine='xlsxwriter')
+    df.to_excel(excel_writer, sheet_name=worksheet_name, index=False)    
+
+    workbook = excel_writer.book
+    worksheet = excel_writer.sheets[worksheet_name]
+
+    # 세로 막대형 차트
+    #chart = workbook.add_chart({'type':'column'})
+    #chart = workbook.add_chart({'type':'line'})
+    chart = workbook.add_chart({'type':'area', 'subtype':'stacked'})
+
+    """
+    # 차트 데이터 범위 지정
+    chart.add_series({'values': '=Sheet1!B2:B7'})
+    chart.add_series({'values': '=Sheet1!C2:C7'})
+    chart.add_series({'values': '=Sheet1!D2:D7'})
+    """
+
+    column_len = len(df.columns)
+    for k in range(column_len -1):
+        start_row = 1               # 범위 시작 행 번호
+        start_col = k + 1           # 범위 시작 열 번호
+        end_row = len(df.index)     # 범위 끝 행 번호
+        end_col = k+1               # 범위 끝 열 번호
+
+        chart.add_series({
+            'values': [worksheet_name, start_row, start_col, end_row, end_col], # 데이터
+            'categories' : [worksheet_name, start_row, 0, end_row, 0], # 축(행) 범례
+            'name': [worksheet_name, 0, k+1], # 열 범례
+            'overlap': [-15]}) # 그래프 사이 간격
+
+    chart.set_title({'name': '영업팀 별 하반기 판매현황'})
+    chart.set_x_axis({'name': '월'}) #행
+    chart.set_y_axis({'name': '판매현황'}) #열
+
+    # 차트 위치 지정, 삽입
+    worksheet.insert_chart('E2', chart, {'x_offset':25, 'y_offset':10})
+
+    excel_writer.save()
+
+def mysyntex_test_excel_sheet2_chart():
+    subject = subject_printer(mysyntex_test_excel_sheet3_chart)
+
+    excel_file = 'chart.xlsx'
+    excel_chart_file = 'chart_out2.xlsx'
+    worksheet_name = 'Sheet2'
+
+    df = pd.read_excel(excel_file, sheet_name=worksheet_name)
+    print(df)     
+
+    excel_writer = pd.ExcelWriter(excel_chart_file, engine='xlsxwriter')
+    df.to_excel(excel_writer, sheet_name=worksheet_name, index=False)    
+
+    workbook = excel_writer.book
+    worksheet = excel_writer.sheets[worksheet_name]
+    
+    chart = workbook.add_chart({'type':'pie'})
+
+    column_len = len(df.columns)
+
+    for k in range(column_len - 1):        
+        start_row = 1               # 범위 시작 행 번호
+        start_col = k+1           # 범위 시작 열 번호
+        end_row = len(df.index)     # 범위 끝 행 번호
+        end_col = k+1               # 범위 끝 열 번호
+
+        chart.add_series({
+            'values': [worksheet_name, start_row, start_col, end_row, end_col], # 데이터
+            'categories' : [worksheet_name, start_row, 0, end_row, 0], # 축(행) 범례
+            'name': [worksheet_name, 0, k+1],
+            'data_labels':{
+                'value':True,
+                'percentage':True,
+                'category':True,
+                'position':'outside_end'}})
+
+    chart.set_title({'name': '가장 좋아하는 운동 조사 결과'})        
+    chart.set_legend({'position':'bottom'}) #범례 표시하지 않음.
+    chart.set_style(1)
+
+    # 차트 위치 지정, 삽입
+    worksheet.insert_chart('E2', chart, {'x_offset':25, 'y_offset':10})
+
+    excel_writer.save()
+
+def mysyntex_test_excel_sheet3_chart():
+    subject = subject_printer(mysyntex_test_excel_sheet3_chart)
+
+    excel_file = 'chart.xlsx'
+    excel_chart_file = 'chart_out3.xlsx'
+    worksheet_name = 'Sheet3'
+
+    df = pd.read_excel(excel_file, sheet_name=worksheet_name)
+    print(df)     
+
+    excel_writer = pd.ExcelWriter(excel_chart_file, engine='xlsxwriter')
+    df.to_excel(excel_writer, sheet_name=worksheet_name, index=False)    
+
+    workbook = excel_writer.book
+    worksheet = excel_writer.sheets[worksheet_name]
+    
+    chart = workbook.add_chart({'type':'scatter'})
+
+    column_len = len(df.columns)
+    start_row = 1               # 범위 시작 행 번호
+    start_col = 1           # 범위 시작 열 번호
+    end_row = len(df.index)     # 범위 끝 행 번호
+    end_col = 1               # 범위 끝 열 번호
+
+    chart.add_series({
+        'values': [worksheet_name, start_row, start_col, end_row, end_col], # 데이터
+        'categories' : [worksheet_name, start_row, 0, end_row, 0], # 축(행) 범례
+        'maker': {'type':'circle', 'size':10}})
+
+    chart.set_title({'name': '키와 몸무게의 관계'})
+    chart.set_x_axis({
+        'name': '키 (cm)',
+        'min':150, 'max':190,
+        'major_gridlines':{'visible':True}}) #행
+    chart.set_y_axis({
+        'name': '몸무게 (kg)',
+        'min':40, 'max':100}) #열
+
+    chart.set_legend({'position':'none'}) #범례 표시하지 않음.
+
+    # 차트 위치 지정, 삽입
+    worksheet.insert_chart('E2', chart, {'x_offset':25, 'y_offset':10})
+
+    excel_writer.save()
+
+def mysyntex_test_excel_sheet4_chart():
+    subject = subject_printer(mysyntex_test_excel_sheet4_chart)
+
+    excel_file = 'chart.xlsx'
+    excel_chart_file = 'chart_out4.xlsx'
+    worksheet_name = 'Sheet4'
+
+    df = pd.read_excel(excel_file, sheet_name=worksheet_name)
+    print(df)     
+
+    excel_writer = pd.ExcelWriter(excel_chart_file, engine='xlsxwriter')
+    df.to_excel(excel_writer, sheet_name=worksheet_name, index=False)    
+
+    workbook = excel_writer.book
+    worksheet = excel_writer.sheets[worksheet_name]
+    
+    chart = workbook.add_chart({'type':'scatter'})
+
+    column_len = len(df.columns)
+
+    for k in range(len(df.index)):
+        start_row = k+1               # 범위 시작 행 번호
+        end_row = start_row
+        market_share = df.iloc[k,3]
+        circle_size = int(15 + market_share * 1.1)
+        if circle_size > 72:
+            circle_size = 72
+
+        chart.add_series({
+            'values': [worksheet_name, start_row, 2, end_row, 2], # 데이터
+            'categories' : [worksheet_name, start_row, 1, end_row, 1], # 축(행) 범례
+            'name':[worksheet_name, start_row, 0],
+            'maker': {
+                'type':'circle',
+                'size': circle_size},
+            'data_labels':{'value':True, 'position':'center'}})
+
+        chart.set_title({'name': '시장 점유율 비교'})
+        chart.set_x_axis({
+            'name': '판매량',
+            'min':0, 'max':10,
+            'major_gridlines':{'visible':True}}) #행
+        chart.set_y_axis({
+            'name': '판매가격 (억)',
+            'min':0, 'max':8}) #열
+
+    #chart.set_legend({'position':'none'}) #범례 표시하지 않음.
+
+    # 차트 위치 지정, 삽입
+    worksheet.insert_chart('E2', chart, {'x_offset':25, 'y_offset':10})
+
+    excel_writer.save()
+
+
 # # math test
 # import math
 # math.sqrt()
@@ -1248,4 +1443,9 @@ def mysyntex_test_read_html():
 #mysyntex_test_xlsxwriter()
 #mysyntex_test_xlsxwriter_cellformat()
 #mysyntex_test_xlwings()
-mysyntex_test_read_html()
+#mysyntex_test_read_html()
+
+#mysyntex_test_excel_chart()
+mysyntex_test_excel_sheet2_chart()
+mysyntex_test_excel_sheet3_chart()
+mysyntex_test_excel_sheet4_chart()
